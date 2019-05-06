@@ -30,7 +30,15 @@ class Api::ProductsController < ApplicationController
     @product.description = params[:description] || @product.description
     @product.image_url = params[:image_url] || @product.image_url
 
+    @product.save 
     render 'show.json.jbuilder'
   end 
 
+  def destroy 
+    @product = Product.find(params[:id])
+    @product.destroy
+
+    render json: {message: "Successfully obliterated"} 
+  end 
+  
 end
