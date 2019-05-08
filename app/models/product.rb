@@ -11,4 +11,12 @@ class Product < ApplicationRecord
   def total 
     tax + price 
   end 
+
+  def in_stock
+    if quantity > 0 
+      "Yes" 
+    else 
+      "Hell No"
+    end 
+  end 
 end
