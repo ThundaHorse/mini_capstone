@@ -33,7 +33,7 @@ class Api::ProductsController < ApplicationController
                             description: params[:description],
                             image_url: params[:image_url],
                             in_stock: params[:in_stock],
-                            quantity: params[:quantity]
+                            quantity: params[:quantity], 
                           )
 
     if @product.save 
@@ -74,3 +74,5 @@ class Api::ProductsController < ApplicationController
   end 
   
 end
+
+
