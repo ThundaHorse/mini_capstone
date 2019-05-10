@@ -1,6 +1,28 @@
 class Api::ProductsController < ApplicationController
   def index 
+    sort_attribute = params[:sort]
+    sort_order = params[:sort_order]
+    search_term = params[:search] 
+    discounted = params[:discount] 
+    
     @product = Product.all 
+    
+    if search_term 
+      @product = @product.where("name iLIKE ? ", "%#{search_term}%")
+    end 
+
+    if discounted == "true"
+      @product = @product.where("price < ?", 1000)
+    end   
+
+    if sort_attribute == "price" && sort_order == "desc" 
+      @product = @product.order(price: :desc) 
+    elsif sort_attribute == "price" && sort_order == "asc"
+      @product = @product.order(price: :asc) 
+    elsif sort_attribute == "price" 
+      @products = @products.order(:price) 
+    end 
+
     render 'display_all_view.json.jbuilder'
   end 
 
@@ -14,8 +36,11 @@ class Api::ProductsController < ApplicationController
                             quantity: params[:quantity]
                           )
 
-    @product.save 
-    render 'show.json.jbuilder'
+    if @product.save 
+      render 'show.json.jbuilder'
+    else 
+      render json: { errors: @product.errors.full_messages }, status: :unprocessable_entity
+    end 
   end 
 
   def show 
@@ -34,8 +59,11 @@ class Api::ProductsController < ApplicationController
     @product.description = params[:description] || @product.description
     @product.image_url = params[:image_url] || @product.image_url
 
-    @product.save 
-    render 'show.json.jbuilder'
+    if @product.save 
+      render 'show.json.jbuilder'
+    else 
+      render json: { messages: @product.errors.full_messages }, status: :unprocessable_entity
+    end
   end 
 
   def destroy 
