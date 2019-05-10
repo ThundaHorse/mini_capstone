@@ -11,16 +11,16 @@ class Api::ProductsController < ApplicationController
       @product = @product.where("name iLIKE ? ", "%#{search_term}%")
     end 
 
-    if discounted == "true"
+    if discounted == 'true'
       @product = @product.where("price < ?", 1000)
     end   
 
-    if sort_attribute == "price" && sort_order == "desc" 
-      @product = @product.order(price: :desc) 
-    elsif sort_attribute == "price" && sort_order == "asc"
-      @product = @product.order(price: :asc) 
+    if sort_attribute && sort_order
+      @product = @product.order(sort_attribute => sort_order) 
     elsif sort_attribute == "price" 
       @products = @products.order(:price) 
+    else 
+      @product = @product.order(:id)
     end 
 
     render 'display_all_view.json.jbuilder'
