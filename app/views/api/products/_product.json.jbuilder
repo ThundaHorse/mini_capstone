@@ -5,10 +5,11 @@ json.quantity product.quantity
 json.in_stock product.in_stock
 json.description product.description
 json.image_url product.image_url
-
+json.supplier_id product.supplier_id 
 json.tax product.tax
 json.price product.price 
 json.total product.total
+
 
 json.formatted do 
   json.price number_to_currency(product.price)
