@@ -7,13 +7,11 @@
 # ])
 
 
-supplier = Supplier.new({name: "Nvidia", email: "nvidia@nvidia.com", phone_number: "333-333-3333"})
-supplier.save 
+# supplier = Supplier.new({name: "Nvidia", email: "nvidia@nvidia.com", phone_number: "333-333-3333"})
+# supplier.save 
 
-supplier = Supplier.new({name: "Amazon", email: "amazon@amazon.com", phone_number: "222-222-2222"})
-supplier.save 
+# supplier = Supplier.new({name: "Amazon", email: "amazon@amazon.com", phone_number: "222-222-2222"})
+# supplier.save 
 
-supplier = Supplier.new({name: "Rick", email: "rick@rick.com", phone_number: "111-111-1111"}) 
-supplier.save 
-
-
+# supplier = Supplier.new({name: "Rick", email: "rick@rick.com", phone_number: "111-111-1111"}) 
+# supplier.save 

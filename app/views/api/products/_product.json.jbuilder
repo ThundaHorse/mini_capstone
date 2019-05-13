@@ -4,8 +4,6 @@ json.price product.price
 json.quantity product.quantity 
 json.in_stock product.in_stock
 json.description product.description
-json.image_url product.image_url
-json.supplier_id product.supplier_id 
 json.tax product.tax
 json.price product.price 
 json.total product.total
@@ -18,3 +16,6 @@ json.formatted do
   json.is_discounted product.is_discounted?
   json.total product.total
 end  
+
+json.supplier_id product.supplier_id
+json.images product.images

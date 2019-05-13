@@ -1,5 +1,4 @@
 class Product < ApplicationRecord
-  has_many :suppliers
 
   validates :name, presence: true 
   validates :name, uniqueness: true 
@@ -12,9 +11,16 @@ class Product < ApplicationRecord
   validates :price, presence: true 
   validates :price, numericality: { greater_than_or_equal_to: 0, less_than: 9999999.99 }  
 
-  def suppliers 
-    Supplier.where(product_id:self.id) 
+  def supplier 
+    # Purpose of this method is to return the supplier object associated with this product 
+    Supplier.find_by(id: id)
+
   end 
+
+  def images
+    Image.find_by(product_id: id) 
+  end 
+ 
 
   def is_discounted?
     price < 1000

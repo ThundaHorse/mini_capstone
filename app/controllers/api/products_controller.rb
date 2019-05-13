@@ -6,6 +6,7 @@ class Api::ProductsController < ApplicationController
     discounted = params[:discount] 
     
     @product = Product.all 
+ 
     
     if search_term 
       @product = @product.where("name iLIKE ? ", "%#{search_term}%")
