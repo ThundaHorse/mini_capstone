@@ -17,5 +17,16 @@ json.formatted do
   json.total product.total
 end  
 
-json.supplier_id product.supplier_id
-json.images product.images
+
+json.supplier do 
+  json.partial! product.supplier, partial: "api/suppliers/supplier", as: :supplier
+
+end 
+
+
+# json.images product.images
+
+json.images do 
+  json.array! product.images, partial: "api/images/image", as: :image
+
+end 

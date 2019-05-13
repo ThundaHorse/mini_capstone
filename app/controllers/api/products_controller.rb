@@ -24,7 +24,7 @@ class Api::ProductsController < ApplicationController
       @product = @product.order(:id)
     end 
 
-    render 'display_all_view.json.jbuilder'
+    render 'index.json.jbuilder'
   end 
 
   def create 
@@ -37,6 +37,12 @@ class Api::ProductsController < ApplicationController
                           )
 
     if @product.save 
+      image = Image.new(
+                      product_id: @product_id,
+                      url: params[:image_url]
+                      )
+      image.save 
+
       render 'show.json.jbuilder'
     else 
       render json: { errors: @product.errors.full_messages }, status: :unprocessable_entity
