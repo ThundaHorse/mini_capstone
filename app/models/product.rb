@@ -3,8 +3,6 @@ class Product < ApplicationRecord
   validates :name, presence: true 
   validates :name, uniqueness: true 
 
-  validates :image_url, length: { maximum: 255 }
-
   validates :description, presence: true 
   validates :description, length: { in: 50..200 }
 
