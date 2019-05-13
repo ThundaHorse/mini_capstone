@@ -4,7 +4,6 @@ class Product < ApplicationRecord
   validates :name, uniqueness: true 
 
   validates :description, presence: true 
-  validates :description, length: { in: 50..200 }
 
   validates :price, presence: true 
   validates :price, numericality: { greater_than_or_equal_to: 0, less_than: 9999999.99 }  
@@ -16,11 +15,11 @@ class Product < ApplicationRecord
   #   Image.find_by(product_id: id) 
   # end 
 
-  #  def supplier 
+   def supplier 
   #   # Purpose of this method is to return the supplier object associated with this product 
-  #   Supplier.find_by(id: id)
+    Supplier.find_by(id: self.supplier_id)
 
-  # end 
+  end 
  
 
   def is_discounted?

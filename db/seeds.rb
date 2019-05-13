@@ -15,3 +15,4 @@
 
 # supplier = Supplier.new({name: "Rick", email: "rick@rick.com", phone_number: "111-111-1111"}) 
 # supplier.save 
+

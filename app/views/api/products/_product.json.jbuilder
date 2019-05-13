@@ -7,7 +7,7 @@ json.description product.description
 json.tax product.tax
 json.price product.price 
 json.total product.total
-
+json.supplier_id product.supplier_id
 
 json.formatted do 
   json.price number_to_currency(product.price)
@@ -18,7 +18,7 @@ json.formatted do
 end  
 
 
-json.supplier do 
+json.suppliers do 
   json.partial! product.supplier, partial: "api/suppliers/supplier", as: :supplier
 
 end 
