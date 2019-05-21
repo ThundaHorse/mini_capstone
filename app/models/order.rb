@@ -1,41 +1,42 @@
 class Order < ApplicationRecord
   belongs_to :user
-
   has_many :carted_products 
   has_many :products, through: :carted_products 
 
-  # def product_name 
-  #   product = Product.find(product_id).name
-  # end 
-
-  def carted
-    CartedProduct.where(status: "carted") 
+  # App record already has initialize 
+  def initialize(input_options)
+    # use super to pass up specific initialize 
+    super
+    # call save totals right when instance is instantiated 
+    save_totals
   end 
 
-  def subtotal 
-    output = 0
-    self.carted.each do |carted_item| 
-      multiplier = carted_item.quantity 
-      output += ((Product.find(carted_item.product_id).price) * multiplier).round(2)
+  def calculate_subtotal 
+    subtotal_sum = 0 
+    user.each do |carted_product| 
+      subtotal_sum += carted_product.subtotal 
     end 
-    output 
+    self.subtotal = subtotal_sum
   end 
 
-  def tax 
-    tax_output = 0
-    self.carted.each do |carted_item| 
-      tax_output += (Product.find(carted_item.product_id).price * 0.09).round(2)
-    end  
-    tax_output 
+  def calculate_tax 
+    self.tax = subtotal * 0.09 
   end 
 
-  def total 
-    tax + subtotal 
+  def calculate_total 
+    self.total = subtotal + tax 
   end 
 
-  def all_pricing 
-    subtotal
-    tax
-    total 
+  def save_totals
+    calculate_subtotal
+    calculate_tax
+    calculate_total 
+    save 
+    update_cart 
   end 
+
+  def update_cart 
+    user.cart.update_all(status: "purchased", order_id: self.id) 
+  end 
+
 end
