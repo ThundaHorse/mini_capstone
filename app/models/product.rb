@@ -1,16 +1,27 @@
 class Product < ApplicationRecord
-
   validates :name, presence: true 
   validates :name, uniqueness: true 
-
   validates :description, presence: true 
-
   validates :price, presence: true 
   validates :price, numericality: { greater_than_or_equal_to: 0, less_than: 9999999.99 }  
 
   has_many :images 
-  has_many :orders
   belongs_to :supplier 
+
+  has_many :product_categories 
+  has_many :categories, through: :product_categories
+  
+  has_many :carted_products 
+  has_many :orders, through: :carted_products
+  has_many :users, through: :carted_products
+
+
+  # has_many :product_categories
+  # # belongs_to :categories
+
+  # def categories
+  #   product_categories.map { |product_category| product_category.category }
+  # end 
 
 
   # def images
@@ -37,11 +48,12 @@ class Product < ApplicationRecord
     tax + price 
   end 
 
-  def in_stock
-    if quantity > 0 
-      "Yes" 
-    else 
-      "Hell No"
-    end 
-  end 
+  # def in_stock
+  #   if quantity > 0 
+  #     "Yes" 
+  #   else 
+  #     "Hell No"
+  #   end 
+  # end 
 end
+

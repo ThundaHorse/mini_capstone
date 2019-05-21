@@ -1,9 +1,13 @@
 json.id order.id
-json.user_id order.user_id 
-json.product do 
-  json.partial! order.product, partial: "api/produts/product", as: :product
+
+json.user do 
+  json.partial! order.user, partial: "api/users/user", as: :user 
 end 
-json.quantity order.quantity
-json.subtotal order.subtotal
+
+json.carted_products do 
+  json.array! order.carted_products, partial: 'api/carted_product/carted_product', as: :carted_product 
+end 
+ 
+json.subtotal order.subtotal 
 json.tax order.tax 
-json.total order.total 
+json.total order.total

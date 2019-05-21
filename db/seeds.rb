@@ -16,3 +16,23 @@
 # supplier = Supplier.new({name: "Rick", email: "rick@rick.com", phone_number: "111-111-1111"}) 
 # supplier.save 
 
+# Already made electronics
+Category.create(name: "Random")
+Category.create(name: "Weapons")
+Category.create(name: "Entertainment")
+
+# Eletrnics 
+ProductCategory.create(category_id: 1, product_id: 1)
+ProductCategory.create(category_id: 1, product_id: 5)
+
+# Randoms 
+ProductCategory.create(category_id: 2, product_id: 4)
+ProductCategory.create(category_id: 2, product_id: 7)
+
+# Weapons 
+ProductCategory.create(category_id: 3, product_id: 3)
+ProductCategory.create(category_id: 3, product_id: 2)
+ProductCategory.create(category_id: 3, product_id: 7)
+
+# Entertainment
+ProductCategory.create(category_id: 4, product_id: 4)

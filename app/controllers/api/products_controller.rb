@@ -1,27 +1,35 @@
 class Api::ProductsController < ApplicationController
+  before_action :authenticate_admin, only: [:create, :update, :destroy] 
+  
   def index 
     sort_attribute = params[:sort]
     sort_order = params[:sort_order]
     search_term = params[:search] 
     discounted = params[:discount] 
+    category_name = params[:category] 
     
-    @product = Product.all 
+    @products = Product.all 
+
+    if category_name 
+      category = Category.find_by(name: category_name) 
+      @products = category.products
+    end  
  
     
     if search_term 
-      @product = @product.where("name iLIKE ? ", "%#{search_term}%")
+      @products = @products.where("name iLIKE ? ", "%#{search_term}%")
     end 
 
     if discounted == 'true'
-      @product = @product.where("price < ?", 1000)
+      @products = @products.where("price < ?", 1000)
     end   
 
     if sort_attribute && sort_order
-      @product = @product.order(sort_attribute => sort_order) 
+      @products = @products.order(sort_attribute => sort_order) 
     elsif sort_attribute == "price" 
-      @products = @products.order(:price) 
+      @productss = @productss.order(:price) 
     else 
-      @product = @product.order(:id)
+      @products = @products.order(:id)
     end 
 
     render 'index.json.jbuilder'
@@ -34,6 +42,7 @@ class Api::ProductsController < ApplicationController
                             description: params[:description],
                             in_stock: params[:in_stock],
                             quantity: params[:quantity], 
+                            supplier_id: params[:supplier_id]
                           )
 
     if @product.save 
@@ -42,7 +51,6 @@ class Api::ProductsController < ApplicationController
                       url: params[:image_url]
                       )
       image.save 
-
       render 'show.json.jbuilder'
     else 
       render json: { errors: @product.errors.full_messages }, status: :unprocessable_entity
